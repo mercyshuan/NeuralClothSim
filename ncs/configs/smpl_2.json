@@ -21,8 +21,8 @@
         "dataset": "smpl",
         "train": "toy.txt",
         "validation": "toy.txt",
-        "test": "toy.txt",
-        "fps": 15
+        "test": "test.txt",
+        "fps": 30
     },
     "model": {
         "blend_weights_optimize": false
