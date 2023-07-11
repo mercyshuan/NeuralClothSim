@@ -38,10 +38,10 @@ def main(config, loc=(0, 0, 0), rot=(0, 0, 0)):
 if __name__ == "__main__":
     clean_scene()
     results_folder = os.path.join(ROOT_DIR, "results")
-    configs = [arg for arg in sys.argv if arg.endswith(".json")]
+    configs = [arg for arg in sys.argv if arg.endswith(".json")] #sys.argv会传递输入的参数组成列表
     for i, config in enumerate(configs):
         try:
-            config = MainConfig(config)
+            config = MainConfig(config)  #按照路径解析json文件
             main(config, loc=(i, 0, 0), rot=(0, 0, 0))
         except:
             print("Could not load predictions for: ", config)

@@ -20,7 +20,7 @@ def main(config, w=1.0):
     model.load_weights(os.path.join(CHECKPOINTS_DIR, config.name))
 
     # Init data
-    data = Data(config, mode="test")
+    data = Data(config, mode="test") #处理数据
 
     # Predict & store
     print("Predicting...")

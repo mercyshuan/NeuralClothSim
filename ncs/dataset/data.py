@@ -12,17 +12,19 @@ from dataset.sequence import PoseSequence
 
 class Data(Sequence):
     def __init__(self, config, mode="train"):
+        #检测模式是否输入合法
         assert mode in {"train", "validation", "test"}, (
             "Data error: wrong mode. It is: "
             + mode
             + ". It must be in {'train', 'validation' ,'test'}"
         )
+
         self.config = config
         self.mode = mode
         self.txt = os.path.join(
-            TXT_DIR, config.data.dataset, getattr(config.data, mode)
-        )
-        self.read_txt()
+            TXT_DIR, config.data.dataset, getattr(config.data, mode) #TXT_DIR = ncs/dataset/txt
+        ) #config.data.dataset = smpl , getattr(,mode)按照模式抽取参数
+        self.read_txt() #读取txt文件中记录的data名称，并存入self.sequences列表
         self.read_sequences()
         self.batch_size = config.experiment.batch_size
         self.read_skeleton()
@@ -36,11 +38,11 @@ class Data(Sequence):
             self.sequences = [
                 os.path.join(DATA_DIR, self.config.data.dataset, line.replace("\n", ""))
                 for line in f.readlines()
-            ]
+            ]#DATA_DIR = 
 
     # Loads the sequence data into PoseSequence objects (See 'sequence.py')
     def read_sequences(self):
-        self.sequences = [PoseSequence(seq) for seq in self.sequences]
+        self.sequences = [PoseSequence(seq) for seq in self.sequences] #将每一个txt中记录路径对应的文件送入Sequence类中
         self.seq_idx = np.array(range(self.num_sequences))
         self.seq_duration = np.array([seq.duration for seq in self.sequences])
         self.seq_prob = self.seq_duration / self.seq_duration.sum()
